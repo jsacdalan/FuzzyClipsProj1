@@ -57,23 +57,26 @@
 	(bind ?cf (read))
 	(assert (stamina yes) CF ?cf))
 	
-;(defrule Footwork
-;	(declare (salience 100))
-;	=>
-;	(printout t "Enter confidence in player's ability to match opponent's footwork (0 to 1): ")
-;	(assert (footwork yes) CF ?cf))
+(defrule Footwork
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to match opponent's footwork (0 to 1): ")
+	(bind ?cf (read))
+	(assert (footwork yes) CF ?cf))
 	
-;(defrule Communication
-;	(declare (salience 100))
-;	=>
-;	(printout t "Enter confidence in player's ability to communicate with teammates (0 to 1): ")
-;	(assert (communication yes) CF ?cf))
+(defrule Communication
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to communicate with teammates (0 to 1): ")
+	(bind ?cf (read))
+	(assert (communication yes) CF ?cf))
 
-;(defrule Fear
-;	(defrule (salience 100))
-;	=>
-;	(printout t "Enter confidence in player's ability to withstand hits from the ball (0 to 1): ")
-;	(assert (fearless yes) CF ?cf))
+(defrule Fear
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to withstand hits from the ball (0 to 1): ")
+	(bind ?cf (read))
+	(assert (fearless yes) CF ?cf))
 	
 ;The get-cf function returns confidence of fact.
 
@@ -81,6 +84,6 @@
 	(declare (salience -100))
 	?f <- (position ?p)
 	=>
-	(printout t ?p " placed with certainty " (get-cf ?f) crlf))
+	(printout t "User should be placed at " ?p " with certainty " (get-cf ?f) crlf))
 
 	
