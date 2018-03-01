@@ -12,12 +12,15 @@
 	(declare (CF 0.5))
 	(stick-skills yes)
 	(dodge yes)
+	(score yes)
 	=>
 	(assert (position attack)))
 	
 (defrule Midfield
 	(declare (CF 0.8))
-	(or (stick-skills yes) (stamina yes))
+	(stamina yes)
+	(ond yes)
+	(or (stick-skills yes) (score yes))
 	=>
 	(assert (position midfield)))
 	
@@ -42,7 +45,21 @@
 	(printout t "Enter confidence in player's stick skills (0 to 1): ")
 	(bind ?cf (read))
 	(assert (stick-skills yes) CF ?cf))
+
+(defrule Score
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to score (0 to 1): ")
+	(bind ?cf (read))
+	(assert (score yes) CF ?cf))
 	
+(defrule OffAndDef
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to play offense and defense (0 to 1): ")
+	(bind ?cf (read))
+	(assert (ond yes) CF ?cf))	
+
 (defrule Dodge
 	(declare (salience 100))
 	=>
