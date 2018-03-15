@@ -14,8 +14,7 @@
 ;Certainty of rules
 
 (defrule Attack1
-	(declare (CF 0.75))
-	(experience yes)
+	(declare (CF 0.9))
 	(check yes)
 	(stick-skills yes)
 	(dodge yes)
@@ -25,8 +24,7 @@
 	(assert (position attack)))
 	
 (defrule Midfield1
-	(declare (CF 0.75))
-	(experience yes)
+	(declare (CF 0.9))
 	(check yes)
 	(long-pass yes)
 	(stamina yes)
@@ -36,8 +34,7 @@
 	(assert (position midfield)))
 	
 (defrule Defense1
-	(declare (CF 0.75))
-	(experience yes)
+	(declare (CF 0.9))
 	(check yes)
 	(long-pass yes)
 	(score yes)
@@ -47,8 +44,7 @@
 	(assert (position defense)))
 	
 (defrule Goalie1
-	(declare (CF 0.85))
-	(experience yes)
+	(declare (CF 0.9))
 	(check yes)
 	(reaction yes)
 	(long-pass yes)
@@ -58,13 +54,6 @@
 	(assert (position goalie)))
 	
 ;Position Facts
-
-(defrule LaxExperience
-	(declare (salience 100))
-	=>
-	(printout t "Enter confidence in player's lacrosse experience (0 to 1): ")
-	(bind ?cf (read))
-	(assert (experience yes) CF ?cf))
 	
 (defrule BigHits
 	(declare (salience 100))
@@ -155,5 +144,8 @@
 	?f <- (position ?p)
 	=>
 	(printout t "User should be placed at " ?p " with certainty " (get-cf ?f) crlf))
+	
+;(defrule DeclarePos
+;	(declare(salience
 
 	
