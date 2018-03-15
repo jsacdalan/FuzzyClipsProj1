@@ -1,6 +1,11 @@
 ;FuzzCLIPS Implementation for PositionAdvisor
 ;Jacob Sacdalan
 
+(defrule welcome
+	(declare (salience 150))
+	=>
+	(printout t "Welcome, this expert system will help advise you on which position to play in Lacrosse." crlf crlf))
+
 (defrule SetThreshold
 	(declare (salience 200))
 	=>
@@ -8,30 +13,45 @@
 
 ;Certainty of rules
 
-(defrule Attack
-	(declare (CF 0.5))
+(defrule Attack1
+	(declare (CF 0.75))
+	(experience yes)
+	(check yes)
 	(stick-skills yes)
 	(dodge yes)
+	(long-pass yes)
 	(score yes)
 	=>
 	(assert (position attack)))
 	
-(defrule Midfield
-	(declare (CF 0.8))
+(defrule Midfield1
+	(declare (CF 0.75))
+	(experience yes)
+	(check yes)
+	(long-pass yes)
 	(stamina yes)
 	(ond yes)
 	(or (stick-skills yes) (score yes))
 	=>
 	(assert (position midfield)))
 	
-(defrule Defense
-	(declare (CF 0.7))
-	(or (footwork yes) (communication yes))
+(defrule Defense1
+	(declare (CF 0.75))
+	(experience yes)
+	(check yes)
+	(long-pass yes)
+	(score yes)
+	(footwork yes) 
+	(communication yes)
 	=>
 	(assert (position defense)))
 	
-(defrule Goalie
-	(declare (CF 0.9))
+(defrule Goalie1
+	(declare (CF 0.85))
+	(experience yes)
+	(check yes)
+	(reaction yes)
+	(long-pass yes)
 	(fearless yes)
 	(communication yes)
 	=>
@@ -39,6 +59,34 @@
 	
 ;Position Facts
 
+(defrule LaxExperience
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's lacrosse experience (0 to 1): ")
+	(bind ?cf (read))
+	(assert (experience yes) CF ?cf))
+	
+(defrule BigHits
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to take/deliver body checks (0 to 1): ")
+	(bind ?cf (read))
+	(assert (check yes) CF ?cf))
+
+(defrule LongPassing
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to make a long pass over 20 yards (0 to 1): ")
+	(bind ?cf (read))
+	(assert (long-pass yes) CF ?cf))
+	
+(defrule Reactions
+	(declare (salience 100))
+	=>
+	(printout t "Enter confidence in player's ability to react quickly to a shot (0 to 1): ")
+	(bind ?cf (read))
+	(assert (reaction yes) CF ?cf))
+	
 (defrule StickSkills
 	(declare (salience 100))
 	=>
@@ -97,8 +145,13 @@
 	
 ;The get-cf function returns confidence of fact.
 
+(defrule End
+	(declare (salience 75))
+	=>
+	(printout t "Here are the results: "))
+
 (defrule ShowResults
-	(declare (salience -100))
+	(declare (salience 150))
 	?f <- (position ?p)
 	=>
 	(printout t "User should be placed at " ?p " with certainty " (get-cf ?f) crlf))
